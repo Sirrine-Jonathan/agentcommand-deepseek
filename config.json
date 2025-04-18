@@ -1,0 +1,31 @@
+{
+  "name": "DeepSeek Coder API",
+  "image_name": "pytorch/pytorch:2.2.1-cuda11.8-cudnn8-runtime",
+  "gpu_types": ["A40", "A100", "H100"],
+  "containerDiskInGB": 20,
+  "gpuCount": 1,
+  "volumeMountPath": "/models",
+  "volumeName": "deepseek-models",
+  "volume_mounts": [
+    {
+      "host_path": "/runpod-volume/deepseek-coder-33B-instruct-GPTQ",
+      "container_path": "/models/deepseek-coder-33B-instruct-GPTQ"
+    }
+  ],
+  "ports": [
+    {
+      "container_port": 8000,
+      "host_port": 8000,
+      "protocol": "http"
+    }
+  ],
+  "env": {
+    "MODEL_PATH": "/models/deepseek-coder-33B-instruct-GPTQ"
+  },
+  "start_script": "./run.sh",
+  "docker_build": {
+    "context": "https://github.com/Sirrine-Jonathan/agentcommand-deepseek.git",
+    "dockerfile_path": "Dockerfile",
+    "build_args": {}
+  }
+}
